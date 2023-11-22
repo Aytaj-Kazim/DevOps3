@@ -1,0 +1,10 @@
+---
+# tasks file for web_app_role
+- name: Start Web Application Container
+  docker_container:
+    name: webapp-container
+    image: ansible-docker-image7
+    state: started
+    ports:
+      - "9000:9000"
+  notify: Restart Web Application Container

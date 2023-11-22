@@ -1,0 +1,26 @@
+version: '3'
+services:
+  webapp:
+    image: ansible-docker-image5
+    ports:
+      - "9000:9000"
+    restart: always
+    depends_on:
+      - mysql-db
+    environment:
+      - DB_HOST=mysql-db  # Set the database host environment variable (adjust name as needed)
+      - DB_USER=root      # Set the database user environment variable
+      - DB_PASS=root      # Set the database password environment variable
+      - DB_NAME=devops3 # Set the database name environment variable
+  mysql-db:
+    image: mysql:5.7  # Use the same version as your existing container
+    environment:
+      MYSQL_DATABASE: devops3  # The name of the database to create
+      MYSQL_USER: root          # The user for accessing the database
+      MYSQL_PASSWORD: root  # The password for the user
+    ports:
+      - "3306:3306"  # Port mapping as per your existing container
+    volumes:
+    - mysql_data:/var/lib/mysql  # Adjust if you have a different volume
+volumes:
+  mysql_data:  # Define the volume for MySQL data

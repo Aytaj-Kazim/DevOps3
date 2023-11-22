@@ -1,0 +1,20 @@
+---
+- hosts: localhost 
+  become: yes
+  become_user: root
+  become_method: sudo
+  tasks:
+    - name: Deploy web application container
+      community.docker.docker_container:
+        name: webapp-container
+        image: ansible-docker-image7:latest
+        env:
+          DATABASE_HOST: mysql-db  
+          DATABASE_USER: aytaj
+          DATABASE_PASSWORD: root
+          DATABASE_NAME: devops3
+        ports:
+          - "8080:80"
+        networks:
+          - name: my-network
+

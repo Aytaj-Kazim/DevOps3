@@ -1,0 +1,47 @@
+---
+# tasks file for database_role
+- name: Install MySQL Server and Client
+  apt:
+    name:
+      - mysql-server
+      - mysql-client
+    state: present
+    update_cache: yes
+
+- name: Install Python MySQL module
+  apt:
+    name: python3-mysqldb
+    state: present
+    update_cache: yes
+
+- name: Start MySQL Service
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: Create MySQL Database
+  mysql_db:
+    name: "{{ mysql_database_name }}"
+    state: present
+    login_user: "{{ mysql_login_user }}"
+    login_password: "{{ mysql_root_password }}"
+
+- name: Create MySQL Table
+  mysql_query:
+    login_user: "{{ mysql_login_user }}"
+    login_password: "{{ mysql_root_password }}"
+    query: "{{ mysql_sql_query }}"
+
+
+- name: Create MySQL User
+  mysql_user:
+    name: "{{ mysql_user_name }}"
+    password: "{{ user_db_password }}"
+    priv: "devops3.*:ALL"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+
+
+

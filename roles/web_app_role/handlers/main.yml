@@ -1,0 +1,12 @@
+---
+- name: Restart Web Application Container
+  docker_container:
+    name: my-webapp
+    image: my-webapp-image
+    state: started
+    ports:
+      - "9000:9000"
+    recreate: yes
+    pull: yes
+
+# handlers file for web_app_role

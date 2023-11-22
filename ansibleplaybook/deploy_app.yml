@@ -1,0 +1,16 @@
+---
+- hosts: localhost 
+  gather_facts: no
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+    - ../roles/database_role
+    - ../roles/web_app_role
+  vars_files:
+    - ../credentials.yml
+  tasks:
+  
+    - name: Use encrypted variable
+      debug:
+        msg: "The secret value is {{ mysql_root_password }}"
